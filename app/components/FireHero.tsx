@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
+import { waLink } from "../data/config";
 
 // ===== Shader del fuego (WebGL) =====
 const VS = "attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}";
@@ -36,16 +37,20 @@ void main(){vec2 uv=gl_FragCoord.xy/R;float y=uv.y,xc=(uv.x-.5)*2.,xn=xc*R.x/R.y
 type DrawFn = (t: number, i: number) => void;
 type Particle = { x: number; y: number; vx?: number; vy: number; r: number; l: number; L: number; s: number };
 
-const base: CSSProperties = { position: "fixed", inset: 0, width: "100%", height: "100%", display: "block" };
+const base: CSSProperties = { position: "absolute", inset: 0, width: "100%", height: "100%", display: "block" };
+const btn: CSSProperties = { padding: "14px 26px", borderRadius: 999, fontWeight: 700, letterSpacing: ".04em", textDecoration: "none", color: "#1a0a02", background: "linear-gradient(90deg,#ffb020,#ff7a1a)", boxShadow: "0 6px 28px rgba(255,110,20,.45)", fontFamily: "system-ui,sans-serif", fontSize: 16 };
 
 export default function FireHero() {
   const bgRef = useRef<HTMLCanvasElement>(null);
   const cvRef = useRef<HTMLCanvasElement>(null);
   const fgRef = useRef<HTMLCanvasElement>(null);
+  const wrapRef = useRef<HTMLElement>(null);
+  const [cta, setCta] = useState(false);
+  useEffect(() => { const id = setTimeout(() => setCta(true), 10500); return () => clearTimeout(id); }, []);
 
   useEffect(() => {
-    const bgc = bgRef.current, cv = cvRef.current, fgc = fgRef.current;
-    if (!bgc || !cv || !fgc) return;
+    const bgc = bgRef.current, cv = cvRef.current, fgc = fgRef.current, wrap = wrapRef.current;
+    if (!bgc || !cv || !fgc || !wrap) return;
     const cx = cv.getContext("2d");
     const oc = document.createElement("canvas");
     const ox = oc.getContext("2d");
@@ -118,16 +123,23 @@ export default function FireHero() {
 
     const resize = () => {
       D = Math.min(window.devicePixelRatio || 1, 2);
-      W = cv.width = Math.round(window.innerWidth * D);
-      H = cv.height = Math.round(window.innerHeight * D);
+      const r = wrap.getBoundingClientRect();
+      W = cv.width = Math.round(r.width * D);
+      H = cv.height = Math.round(r.height * D);
       for (const c of [bgc, fgc]) { c.width = (W * 0.6) | 0; c.height = (H * 0.6) | 0; }
       S = Math.min(W * 0.92, H * 0.7);
       oc.width = oc.height = Math.round(S);
     };
-    const restart = () => { t0 = performance.now(); fire.length = 0; sparks.length = 0; };
+    const restart = (e: PointerEvent) => {
+      if ((e.target as HTMLElement).closest("a,button")) return;
+      t0 = performance.now(); fire.length = 0; sparks.length = 0;
+    };
+    let visible = true; // pausa el dibujo cuando el hero no se ve
+    const io = new IntersectionObserver(([en]) => { visible = en.isIntersecting; });
+    io.observe(wrap);
     resize();
     window.addEventListener("resize", resize);
-    window.addEventListener("pointerdown", restart);
+    wrap.addEventListener("pointerdown", restart);
 
     const emit = (n: number, k: number) => {
       for (let i = 0; i < n; i++) {
@@ -146,6 +158,7 @@ export default function FireHero() {
 
     const ph = new Image();
     const frame = (now: number) => {
+      if (!visible) { raf = requestAnimationFrame(frame); return; }
       const t = (now - t0) / 1000, dt = 1 / 60;
       const inten = 0.1 + 0.9 * sm(1, 6, t);   // el fuego crece
       const rev = sm(4.5, 10, t);              // el logo emerge
@@ -216,15 +229,20 @@ export default function FireHero() {
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
-      window.removeEventListener("pointerdown", restart);
+      wrap.removeEventListener("pointerdown", restart);
+      io.disconnect();
     };
   }, []);
 
   return (
-    <>
+    <section ref={wrapRef} style={{ position: "relative", width: "100%", height: "100svh", overflow: "hidden", background: "#070201" }}>
       <canvas ref={bgRef} style={{ ...base, zIndex: 0 }} />
       <canvas ref={cvRef} style={{ ...base, zIndex: 1 }} />
       <canvas ref={fgRef} style={{ ...base, zIndex: 2 }} />
-    </>
+      <div style={{ position: "absolute", left: 0, right: 0, bottom: "5vh", zIndex: 3, display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap", padding: "0 16px", opacity: cta ? 1 : 0, transform: cta ? "none" : "translateY(12px)", transition: "all .9s ease", pointerEvents: cta ? "auto" : "none" }}>
+        <a href="#catalogo" style={btn}>Ver catálogo</a>
+        <a href={waLink("Hola, quiero más información.")} target="_blank" rel="noopener noreferrer" style={{ ...btn, background: "#25D366", color: "#06210f", boxShadow: "0 6px 24px rgba(37,211,102,.35)" }}>Escribir por WhatsApp</a>
+      </div>
+    </section>
   );
 }
