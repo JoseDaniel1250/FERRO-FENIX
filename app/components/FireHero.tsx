@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
-import { waLink } from "../data/config";
 
 // ===== Shader del fuego (WebGL) =====
 const VS = "attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}";
@@ -38,7 +37,24 @@ type DrawFn = (t: number, i: number) => void;
 type Particle = { x: number; y: number; vx?: number; vy: number; r: number; l: number; L: number; s: number };
 
 const base: CSSProperties = { position: "absolute", inset: 0, width: "100%", height: "100%", display: "block" };
-const btn: CSSProperties = { padding: "14px 26px", borderRadius: 999, fontWeight: 700, letterSpacing: ".04em", textDecoration: "none", color: "#1a0a02", background: "linear-gradient(90deg,#ffb020,#ff7a1a)", boxShadow: "0 6px 28px rgba(255,110,20,.45)", fontFamily: "system-ui,sans-serif", fontSize: 16 };
+const btn: CSSProperties = {
+  position: "relative",
+  padding: "18px 46px",
+  borderRadius: 20,
+  fontWeight: 800,
+  letterSpacing: ".1em",
+  textTransform: "uppercase",
+  textDecoration: "none",
+  color: "#fff3df",
+  fontFamily: "system-ui,sans-serif",
+  fontSize: 16,
+  backgroundColor: "#0b0704",
+  border: "1px solid rgba(255,170,60,.75)",
+  boxShadow: "0 0 42px rgba(255,110,20,.4), inset 0 1px 0 rgba(255,210,140,.18), inset 0 -18px 30px -20px rgba(0,0,0,.85)",
+  textShadow: "0 1px 3px rgba(0,0,0,.6)",
+  overflow: "hidden",
+  transition: "transform .3s ease, box-shadow .3s ease",
+};
 
 export default function FireHero() {
   const bgRef = useRef<HTMLCanvasElement>(null);
@@ -239,9 +255,17 @@ export default function FireHero() {
       <canvas ref={bgRef} style={{ ...base, zIndex: 0 }} />
       <canvas ref={cvRef} style={{ ...base, zIndex: 1 }} />
       <canvas ref={fgRef} style={{ ...base, zIndex: 2 }} />
-      <div style={{ position: "absolute", left: 0, right: 0, bottom: "5vh", zIndex: 3, display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap", padding: "0 16px", opacity: cta ? 1 : 0, transform: cta ? "none" : "translateY(12px)", transition: "all .9s ease", pointerEvents: cta ? "auto" : "none" }}>
-        <a href="#catalogo" style={btn}>Ver catálogo</a>
-        <a href={waLink("Hola, quiero más información.")} target="_blank" rel="noopener noreferrer" style={{ ...btn, background: "#25D366", color: "#06210f", boxShadow: "0 6px 24px rgba(37,211,102,.35)" }}>Escribir por WhatsApp</a>
+      <div style={{ position: "absolute", left: 0, right: 0, bottom: "6vh", zIndex: 3, display: "flex", justifyContent: "center", padding: "0 16px", opacity: cta ? 1 : 0, transform: cta ? "none" : "translateY(12px)", transition: "all .9s ease", pointerEvents: cta ? "auto" : "none" }}>
+        <a
+          href="#catalogo"
+          style={btn}
+          onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 0 62px rgba(255,130,30,.6), inset 0 1px 0 rgba(255,210,140,.22), inset 0 -18px 30px -20px rgba(0,0,0,.85)"; e.currentTarget.style.transform = "translateY(-3px) scale(1.03)"; }}
+          onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 0 42px rgba(255,110,20,.4), inset 0 1px 0 rgba(255,210,140,.18), inset 0 -18px 30px -20px rgba(0,0,0,.85)"; e.currentTarget.style.transform = "none"; }}
+        >
+          <span style={{ position: "absolute", inset: 0, borderRadius: 20, background: "linear-gradient(90deg,transparent,rgba(255,220,150,.18),transparent)", animation: "sheen 2.6s ease-in-out infinite" }} />
+          <span style={{ position: "relative" }}>Ver catálogo</span>
+        </a>
+        <style>{`@keyframes sheen{0%,100%{transform:translateX(-120%)}50%{transform:translateX(120%)}}`}</style>
       </div>
     </section>
   );

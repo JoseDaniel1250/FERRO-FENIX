@@ -1,7 +1,7 @@
 // ===== EDITA AQUÍ =====
 export const EMPRESA = "Ferro-Fénix";
 // Número de WhatsApp con código de país, sin "+" ni espacios (ejemplo: 573001234567)
-export const WHATSAPP = "573148647444";
+export const WHATSAPP = "573000000000";
 
 export type Producto = { id: string; nombre: string; descripcion: string; imagen: string };
 
