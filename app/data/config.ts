@@ -1,7 +1,7 @@
 // ===== EDITA AQUÍ =====
 export const EMPRESA = "Ferro-Fénix";
 // Número de WhatsApp con código de país, sin "+" ni espacios (ejemplo: 573001234567)
-export const WHATSAPP = "573000000000";
+export const WHATSAPP = "573183422898";
 
 export type Producto = { id: string; nombre: string; descripcion: string; imagen: string };
 
@@ -13,6 +13,10 @@ export const PRODUCTOS: Producto[] = [
   { id: "p4", nombre: "Ladrillos", descripcion: "Farol, Tolete.", imagen: "/productos/producto-4.png" },
   { id: "p5", nombre: "Supermastick", descripcion: "Estuco Para Interiores.", imagen: "/productos/producto-5.png" },
   { id: "p6", nombre: "Hierro", descripcion: "Todos Los Calibres", imagen: "/productos/producto-6.png" },
-];
+  { id: "p7", nombre: "Eternit", descripcion: "Todos Los Calibres", imagen: "/productos/producto-7.png" },
+  { id: "p8", nombre: "Iluminación Led", descripcion: "Todos Los Calibres", imagen: "/productos/producto-8.png" },
+  { id: "p9", nombre: "Hierro", descripcion: "Todos Los Calibres", imagen: "/productos/producto-9.png" },
+  ]
+
 
 export const waLink = (mensaje: string) => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(mensaje)}`;
