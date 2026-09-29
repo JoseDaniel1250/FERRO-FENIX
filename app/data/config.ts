@@ -13,9 +13,9 @@ export const PRODUCTOS: Producto[] = [
   { id: "p4", nombre: "Ladrillos", descripcion: "Farol, Tolete.", imagen: "/productos/producto-4.png" },
   { id: "p5", nombre: "Supermastick", descripcion: "Estuco Para Interiores.", imagen: "/productos/producto-5.png" },
   { id: "p6", nombre: "Hierro", descripcion: "Todos Los Calibres", imagen: "/productos/producto-6.png" },
-  { id: "p7", nombre: "Eternit", descripcion: "Todos Los Calibres", imagen: "/productos/producto-7.png" },
-  { id: "p8", nombre: "Iluminación Led", descripcion: "Todos Los Calibres", imagen: "/productos/producto-8.png" },
-  { id: "p9", nombre: "Hierro", descripcion: "Todos Los Calibres", imagen: "/productos/producto-9.png" },
+  { id: "p7", nombre: "Tejas", descripcion: "Teja de Zinc y Trapezoidal", imagen: "/productos/producto-7.png" },
+  { id: "p8", nombre: "Iluminación Led", descripcion: "Todo En Iluminación", imagen: "/productos/producto-8.png" },
+  { id: "p9", nombre: "Estuco", descripcion: "Pegante General", imagen: "/productos/producto-9.png" },
   ]
 
 
