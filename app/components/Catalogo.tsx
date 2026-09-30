@@ -44,7 +44,7 @@ export default function Catalogo() {
   const p = PRODUCTOS[active];
 
   return (
-    <section id="catalogo" style={{ padding: "90px 16px 70px", textAlign: "center", background: "linear-gradient(#070201,#120604 60%,#070201)", overflow: "hidden", fontFamily: "system-ui,sans-serif" }}>
+    <section id="catalogo" style={{ padding: "70px 16px 50px", textAlign: "center", overflow: "hidden", fontFamily: "system-ui,sans-serif" }}>
       <h2 style={{ margin: 0, fontFamily: "Georgia,serif", fontWeight: 400, fontSize: "clamp(28px,5vw,46px)", letterSpacing: ".12em", color: "#ffe9c4" }}>CATÁLOGO</h2>
       <p style={{ margin: "10px 0 0", color: "#c9a88a" }}>Desliza o usa las flechas para ver los productos</p>
 
