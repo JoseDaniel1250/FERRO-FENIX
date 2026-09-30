@@ -62,7 +62,7 @@ export default function FireHero() {
   const fgRef = useRef<HTMLCanvasElement>(null);
   const wrapRef = useRef<HTMLElement>(null);
   const [cta, setCta] = useState(false);
-  useEffect(() => { const id = setTimeout(() => setCta(true), 10500); return () => clearTimeout(id); }, []);
+  useEffect(() => { const id = setTimeout(() => setCta(true), 7300); return () => clearTimeout(id); }, []);
 
   useEffect(() => {
     const bgc = bgRef.current, cv = cvRef.current, fgc = fgRef.current, wrap = wrapRef.current;
@@ -176,9 +176,9 @@ export default function FireHero() {
     const frame = (now: number) => {
       if (!visible) { raf = requestAnimationFrame(frame); return; }
       const t = (now - t0) / 1000, dt = 1 / 60;
-      const inten = 0.1 + 0.9 * sm(1, 6, t);   // el fuego crece
-      const rev = sm(4.5, 10, t);              // el logo emerge
-      const heat = 1 - sm(6.5, 11.5, t);       // incandescente -> color real
+      const inten = 0.1 + 0.9 * sm(0.7, 4.2, t);  // el fuego crece
+      const rev = sm(3.2, 7, t);                  // el logo emerge
+      const heat = 1 - sm(4.6, 8.1, t);           // incandescente -> color real
       cx.globalCompositeOperation = "source-over";
       cx.clearRect(0, 0, W, H);
       if (gl) gl.bg(t, inten);
@@ -203,7 +203,7 @@ export default function FireHero() {
 
       // Logo
       const cxp = W / 2, by = H * 0.47 + (1 - rev) * S * 0.22;
-      const br = 1 + 0.012 * Math.sin(t * 1.7) + 0.05 * Math.exp(-Math.pow(t - 10, 2) / 1.2) * rev;
+      const br = 1 + 0.012 * Math.sin(t * 1.7) + 0.05 * Math.exp(-Math.pow(t - 7, 2) / 1.2) * rev;
       cx.globalCompositeOperation = "lighter";
       const halo = cx.createRadialGradient(cxp, by, 0, cxp, by, S * 0.75);
       const ha = (0.18 + 0.1 * Math.sin(t * 2.3)) * (0.3 + rev) + heat * 0.25 * rev;

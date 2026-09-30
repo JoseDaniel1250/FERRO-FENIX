@@ -43,15 +43,14 @@ export default function Home() {
       <h1 className="sr-only">{EMPRESA}</h1>
       <FireHero />
 
-      {/* Fondo de la ferretería: corre detrás del catálogo, contacto y ubicación, sin cortes entre secciones */}
+      {/* Fondo con la imagen de fuego: una sola capa continua para catálogo, contacto y ubicación */}
       <div
         style={{
-          position: "relative",
           backgroundImage:
-            "linear-gradient(180deg, rgba(7,2,1,0) 0%, rgba(7,2,1,.5) 18%, rgba(7,2,1,.82) 60%, rgba(7,2,1,.97) 100%), url('/fondo-ferreteria.jpg')",
+            "linear-gradient(180deg, rgba(7,2,1,.3) 0%, rgba(7,2,1,.55) 45%, rgba(7,2,1,.82) 100%), url('/fondo-productos.jpg')",
           backgroundSize: "cover",
-          backgroundPosition: "center top",
-          backgroundAttachment: "fixed",
+          backgroundPosition: "center bottom",
+          backgroundRepeat: "no-repeat",
         }}
       >
         <Catalogo />
