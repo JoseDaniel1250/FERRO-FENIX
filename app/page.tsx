@@ -58,7 +58,7 @@ export default function Home() {
         <section style={{ padding: "40px 16px 22px", textAlign: "center" }}>
           <div style={card}>
             <h2 style={cardTitle}>CONTACTO</h2>
-            <p style={cardText}>Escríbenos y te respondemos por WhatsApp.</p>
+            <p style={cardText}>Cotiza tus productos por WhatsApp.</p>
             <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 20 }}>
               <a href={waLink("Hola, quiero hacer una consulta.")} target="_blank" rel="noopener noreferrer" style={{ ...btn, background: "#25D366", color: "#06210f" }}>
                 Escribir por WhatsApp
